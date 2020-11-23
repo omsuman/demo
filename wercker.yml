@@ -9,7 +9,7 @@ build:
         packages: maven
     - script:
         name: maven build
-        code: mvn clean install
+        code: mvn clean install spring-boot:run
 
 buildimage:
   steps:
