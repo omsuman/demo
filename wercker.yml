@@ -1,0 +1,29 @@
+box:
+  id: openjdk:8
+  ports:
+    - 8080
+
+#Build our application using Maven, just as we always have
+build:
+  steps:
+    - install-packages:
+        packages: maven
+    - script:
+        name: maven build
+        code: mvn clean install
+
+buildimage:
+  steps:
+      - internal/docker-build:
+         dockerfile: Dockerfile
+         image-name: my-new-image
+
+pushimage:
+  steps:
+      - internal/docker-push::
+         # specify the image to be pushed - this is the one we created earlier
+         image-name: my-new-image
+         username: $USERNAME # Registry username
+         password: $PASSWORD # Registry password
+         registry: IAD.ocir.io
+         repository: $USERNAME/tollingpoc
